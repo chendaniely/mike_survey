@@ -7,6 +7,7 @@ import time
 import random
 from sys import stdout
 from time import sleep
+import math
 
 class QuestionInput:
     def __init__(self):
@@ -119,7 +120,7 @@ def read_in_question_data(file_in):
 
 def example_screen(example_data_list):
     os.system(['clear', 'cls'][os.name == 'nt'])
-    print "Remember, this task is an important determinant of your performance evaluation.\n\nYour goal is to be within +/- $10 of the actual stock price for this week's estimate.\n\n"
+
     first_name = raw_input("Please type in your FIRST name and press ENTER:")
     last_name = raw_input("Please type in your LAST name and press ENTER:")
     id = raw_input("Please type in your ID for this test and press ENTER:")
@@ -133,9 +134,10 @@ def example_screen(example_data_list):
         answer_list.append(x)
         print_summary(answer_list, last)
         print "Do not enter anything until prompted."
+        verbage = "Based on the performance information above, what is your estimated stock price for this organization?  "
         time.sleep(3)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Guess the stock price?", 5)
+        resp, t = qi.pose_query(verbage, 5)
         guess = 0
         if guess == '':
             guess = None
@@ -146,7 +148,7 @@ def example_screen(example_data_list):
         answer_list[n][7], answer_list[n][8] = resp, t
         last = guess
         answer_list[n][9] = last
-        time.sleep(3)
+        time.sleep(1)
         os.system(['clear', 'cls'][os.name == 'nt'])
     return fileout
 
@@ -173,7 +175,7 @@ def survey(data_list, file_out):
         answer_list[n][7], answer_list[n][8] = resp, t
         last = guess
         answer_list[n][9] = last
-        time.sleep(3)
+        time.sleep(1)
         file_out.write('%s' % str(answer_list[n]))
         os.system(['clear', 'cls'][os.name == 'nt'])
 
@@ -192,7 +194,7 @@ def print_summary(data_list, last):
             last_five.append(dat)
 
     print "Summary of Past Performance (Last 4 weeks)"
-
+    print '\n'
     print "\t",
     for n, x in enumerate(last_five):
         if n == (len(last_five) - 1):
@@ -225,18 +227,23 @@ def print_summary(data_list, last):
 
     print "\n\nDifference",
     for n, x in enumerate(last_five):
-        if isinstance(x[7], int) and isinstance(last, int):
-            diff = int(x[7]) - int(x[6])
-            print "\t" + str(diff) + "\t",
-            
+        if n == (len(last_five) - 1):
+            diff = "?"
         else:
-            print "\t" + str(x[8]) + "\t",
+            try:
+                int(x[7])
+                diff = int(x[7]) - int(x[6])
+            except ValueError:
+                diff = "NA"
+            except TypeError:
+                diff = "NA"
+            
+
+        print "\t" + str(diff) + "\t",
+
     print "\n"
-    print "Remember, this task is an important determinant of your performance evaluation." 
-    print "Your goal is to be within +/- $10 of the actual stock price for this week's estimate."
-    print "\n"
-    print "Based on the performance information above, what is your estimated stock price for this organization?"
-    print "\n"
+    print "Remember, this task is an important determinant of your performance evaluation.\nYou should do your best when estimating the price of this week's stock.\n\n"
+
 
 def print_file(list, file):
     for x in list:
