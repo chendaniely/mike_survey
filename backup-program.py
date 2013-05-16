@@ -79,6 +79,33 @@ def read_in_ex_data(file_in):
             list_of_data.append(data_tuple)
     return list_of_data, d_solutions
 
+def create_backup_file(prefix, list):
+    fp = open(prefix + "_rawdata.csv", 'w')
+    for x in list:
+        for y in x:
+            fp.write('%s\t' % y)
+
+def read_in_backup_data(file_in):
+    list_of_data = []
+    d_solutions = {}
+    for n, line in enumerate(file_in):
+        if n > 0:
+            dat = line.rstrip().split('\t')
+            id = int(dat[0])
+            random_id = id
+            adv = dat[1]
+            mrksh = dat[2]
+            revg = dat[3]
+            price_d = dat[4]
+            price_correct = dat[5]
+            price_guess = '?'
+            time = ''
+            difference = "?"
+            d_solutions[id] = price_correct
+            data_tuple = [random_id, id, adv, mrksh, revg, price_d, price_correct, price_guess, time, difference]
+            list_of_data.append(data_tuple)
+    return list_of_data, d_solutions
+
 def read_in_question_data(file_in):
     random1_start = 0
     random1_end = 90
@@ -123,6 +150,7 @@ def example_screen(example_data_list):
     first_name = raw_input("Please type in your FIRST name and press ENTER:")
     last_name = raw_input("Please type in your LAST name and press ENTER:")
     id = raw_input("Please type in your ID for this test and press ENTER:")
+    prefix = last_name + "_" + id
     fileout = open(last_name + "_" + id + ".txt", 'w')
     raw_input("We'll start with a practice input.  Press ENTER to BEGIN...")
     os.system(['clear', 'cls'][os.name == 'nt'])
@@ -133,10 +161,9 @@ def example_screen(example_data_list):
         answer_list.append(x)
         print_summary(answer_list, last)
         print "Do not enter anything until prompted."
-        verbage = "Based on the performance information above, what is your estimated stock price for this organization?  "
         time.sleep(3)
         qi = QuestionInput()
-        resp, t = qi.pose_query(verbage, 5)
+        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 5)
         guess = 0
         if guess == '':
             guess = None
@@ -149,7 +176,7 @@ def example_screen(example_data_list):
         answer_list[n][9] = last
         time.sleep(1)
         os.system(['clear', 'cls'][os.name == 'nt'])
-    return fileout
+    return fileout, prefix
 
 def survey(data_list, file_out):
     os.system(['clear', 'cls'][os.name == 'nt'])
@@ -163,7 +190,7 @@ def survey(data_list, file_out):
         print "Do not enter anything until prompted."
         time.sleep(3)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Guess the stock price?", 5)
+        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 5)
         guess = 0
         if guess == '':
             guess = 0
@@ -175,7 +202,9 @@ def survey(data_list, file_out):
         last = guess
         answer_list[n][9] = last
         time.sleep(1)
-        file_out.write('%s' % str(answer_list[n]))
+        for x in answer_list[n]:
+            file_out.write('%s,' % str(x))
+        file_out.write('\n')
         os.system(['clear', 'cls'][os.name == 'nt'])
 
 
@@ -267,16 +296,16 @@ def print_file(list, file):
         file.write("\n")
 
 if __name__ == "__main__":
-    file_in = open("/home/ubuntu/mike/chosen_sim_data.csv")
-    file_in_ex = open("/home/ubuntu/mike/example.csv")
+    file_in = open("./chosen_sim_data.csv")
+    file_backup = raw_input("Enter the backup file to proceed: ")
+    question_start = raw_input("Enter the question # to start on: ")
+    file_backup_in = open(file_backup)
  
-    example_list, example_sol = read_in_ex_data(file_in_ex)
-    data_list, dict_sol = read_in_question_data(file_in)
-    test_list = data_list
-    fp = example_screen(example_list[0:5])
-    print "Now begin the real deal"
+    data_list, dict_sol = read_in_backup_data(file_backup_in)
+
     raw_input("Press ENTER to BEGIN...")
-    survey(test_list[0:10], fp)
+    fp = open(file_backup + "_round2.txt", 'w')
+    survey(data_list[int(question_start)-2:], fp)
     os.system(['clear', 'cls'][os.name == 'nt'])
     print "THE END"
     raw_input("Please do not touch anything else!")
