@@ -267,8 +267,8 @@ def print_file(list, file):
         file.write("\n")
 
 if __name__ == "__main__":
-    file_in = open("/home/ubuntu/mike/chosen_sim_data.csv")
-    file_in_ex = open("/home/ubuntu/mike/example.csv")
+    file_in = open("./chosen_sim_data.csv")
+    file_in_ex = open("./example.csv")
  
     example_list, example_sol = read_in_ex_data(file_in_ex)
     data_list, dict_sol = read_in_question_data(file_in)
