@@ -3,6 +3,7 @@ mike_survey
 To install:
 
 git clone git://github.com/adina/mike_survey.git
+
 cd mike_survey
 
 To run:
