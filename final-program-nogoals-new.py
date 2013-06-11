@@ -17,7 +17,7 @@ class QuestionInput:
 
     def pose_query(self, question, time_limit):
         self.time_left = time_limit
-        self.template = "\r" + question + "(%d s remaining): "
+        self.template = "\r" + question + "(%d s remaining):"
         self._update()
         self.template = "\033[s" + self.template + "\033[u"
 
@@ -164,7 +164,7 @@ def example_screen(example_data_list):
         print "Do not enter anything until prompted."
         time.sleep(3)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 5)
+        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 30)
         guess = 0
         if guess == '':
             guess = None
@@ -191,7 +191,7 @@ def survey(data_list, file_out):
         print "Do not enter anything until prompted."
         time.sleep(3)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 5)
+        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization? ", 30)
         guess = 0
         if guess == '':
             guess = 0
@@ -228,20 +228,34 @@ def print_summary(data_list, last):
     for n, x in enumerate(last_five):
         if n == (len(last_five) - 1):
             print "\tCurrent Week",
-        else:
-            print "\tWeek " + str(x[0]) + " ",
+        elif n == (len(last_five) - 2):
+            print "\t1 Week Ago",
+        elif n == (len(last_five) - 3):
+            print "\t2 Weeks Ago",
+        elif n == (len(last_five) - 4):
+            print "\t3 Weeks Ago",
+        elif n == (len(last_five) - 5):
+            print "\t4 Weeks Ago",
+    print '\n',
+    print '\t',
 
+    for n, x in enumerate(last_five):
+        print "\t(Week " + str(x[0]) + ") ",
+
+    print '\n',
     print "\nAdvertising", 
     for x in last_five:
-        print "\t$" + x[2] + "\t",
+        print "\t" + x[2] + "\t",
 
     print "\nMarket Share",
     for x in last_five:
-        print "\t$" + x[3] + "\t",
+        print "\t" + x[3] + "\t",
 
     print "\nRevenue Growth",
     for x in last_five:
-        print "\t$" + x[4] + "\t",
+        print "\t" + x[4] + "\t",
+
+    print '\n',
 
     print "\nStock Price",
     for n, x in enumerate(last_five):
@@ -268,11 +282,13 @@ def print_summary(data_list, last):
                 diff = "NA"
             
 
-        print "\t" + str(diff) + "\t",
+        print "\t$" + str(diff) + "\t",
 
     print "\n"
     print "Remember, this task is an important determinant of your performance evaluation." 
+    print "You should do your best when estimating the price of this week's stock."
     print "\n"
+
 
 def print_file(list, file):
     for x in list:
