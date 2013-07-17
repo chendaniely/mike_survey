@@ -160,7 +160,7 @@ def example_screen(example_data_list):
     for n, x in enumerate(example_data_list):
         os.system(['clear', 'cls'][os.name == 'nt'])
         answer_list.append(x)
-        print_summary(answer_list, last)
+        print_summary_ex(answer_list, last)
         print "Do not enter anything until prompted."
         time.sleep(3)
         qi = QuestionInput()
@@ -252,6 +252,86 @@ def print_summary(data_list, last):
         print "\t" + x[3] + "\t",
 
     print "\nRevenue Growth",
+    for x in last_five:
+        print "\t" + x[4] + "\t",
+
+    print '\n',
+
+    print "\nStock Price",
+    for n, x in enumerate(last_five):
+        if n == (len(last_five) - 1):
+            print "\t$" + "?" + "\t",
+        else:
+            print "\t$" + x[6] + "\t",
+
+    print "\nYour Estimate",
+    for x in last_five:
+         print "\t$" + str(x[7]) + "\t",
+
+    print "\n\nDifference",
+    for n, x in enumerate(last_five):
+        if n == (len(last_five) - 1):
+            diff = "?"
+        else:
+            try:
+                int(x[7])
+                diff = int(x[7]) - int(x[6])
+            except ValueError:
+                diff = "NA"
+            except TypeError:
+                diff = "NA"
+            
+
+        print "\t$" + str(diff) + "\t",
+
+    print "\n"
+    print "Remember, this task is an important determinant of your performance evaluation." 
+    print "You should do your best when estimating the price of this week's stock."
+    print "\n"
+
+def print_summary_ex(data_list, last):
+    last_five = []
+    length_list = len(data_list)
+
+    if length_list < 5:
+        for i in range(0, length_list):
+            dat = data_list[i]
+            last_five.append(dat)
+    else:
+        for i in range(length_list - 5, length_list):
+            dat = data_list[i]
+            last_five.append(dat)
+
+    print "Summary of Past Performance (Last 4 weeks)"
+    print '\n'
+    print "\t",
+    for n, x in enumerate(last_five):
+        if n == (len(last_five) - 1):
+            print "\tCurrent Week",
+        elif n == (len(last_five) - 2):
+            print "\t1 Week Ago",
+        elif n == (len(last_five) - 3):
+            print "\t2 Weeks Ago",
+        elif n == (len(last_five) - 4):
+            print "\t3 Weeks Ago",
+        elif n == (len(last_five) - 5):
+            print "\t4 Weeks Ago",
+    print '\n',
+    print '\t',
+
+    for n, x in enumerate(last_five):
+        print "\t(Week " + str(x[0]) + ") ",
+
+    print '\n',
+    print "\nSocial Rep", 
+    for x in last_five:
+        print "\t" + x[2] + "\t",
+
+    print "\nSales\t",
+    for x in last_five:
+        print "\t" + x[3] + "\t",
+
+    print "\nR&D\t",
     for x in last_five:
         print "\t" + x[4] + "\t",
 
