@@ -8,6 +8,7 @@ import random
 from sys import stdout
 from time import sleep
 import math
+import termios
 
 class QuestionInput:
     def __init__(self):
@@ -45,6 +46,7 @@ class QuestionInput:
             pass
 
         self.timer.cancel()
+        termios.tcflush(sys.stdin, termios.TCIFLUSH)
         return ret, tl
 
     def _update(self):
