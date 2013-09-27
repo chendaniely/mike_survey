@@ -164,9 +164,9 @@ def example_screen(example_data_list):
         answer_list.append(x)
         print_summary_ex(answer_list, last)
         print "Do not enter anything until prompted."
-        time.sleep(3)
+        time.sleep(5)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 30)
+        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
         if guess == '':
             guess = None
@@ -191,9 +191,9 @@ def survey(data_list, file_out):
 
         print_summary(answer_list, last)
         print "Do not enter anything until prompted."
-        time.sleep(3)
+        time.sleep(5)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization? ", 30)
+        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization? ", 15)
         guess = 0
         if guess == '':
             guess = 0
@@ -388,11 +388,11 @@ if __name__ == "__main__":
     fp, prefix = example_screen(example_list[0:5])
     create_backup_file(prefix, data_list)
 
-    print "Now begin the real deal"
-    raw_input("Press ENTER to BEGIN...")
+    print "This concludes your practice session."
+    raw_input("Please do not press anything until instructed.")
 
-    survey(test_list[0:10], fp)
+    survey(test_list, fp)
     os.system(['clear', 'cls'][os.name == 'nt'])
-    print "THE END"
-    raw_input("Please do not touch anything else!")
+    print "This concludes this exercise.  Thank you!"
+    raw_input("Please press enter to exit this program.")
 
