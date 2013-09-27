@@ -429,5 +429,4 @@ if __name__ == "__main__":
     survey(test_list, fp)
     os.system(['clear', 'cls'][os.name == 'nt'])
     print "Thank you, this completes the exercise."
-    raw_input("Please press ENTER to exit this program.")
 
