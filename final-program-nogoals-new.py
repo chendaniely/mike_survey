@@ -191,7 +191,7 @@ def survey(data_list, file_out):
 
         print_summary(answer_list, last)
         print "Do not enter your estimate until prompted."
-        time.sleep(5)
+        time.sleep(4.5)
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization? ", 15)
         guess = 0
