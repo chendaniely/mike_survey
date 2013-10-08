@@ -163,7 +163,7 @@ def example_screen(example_data_list):
         os.system(['clear', 'cls'][os.name == 'nt'])
         answer_list.append(x)
         print_summary_ex(answer_list, last)
-        print "Do not enter anything until prompted."
+        print "Do not enter your estimate until prompted."
         time.sleep(5)
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
@@ -190,7 +190,7 @@ def survey(data_list, file_out):
         answer_list.append(x)
 
         print_summary(answer_list, last)
-        print "Do not enter anything until prompted."
+        print "Do not enter your estimate until prompted"
         time.sleep(5)
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
