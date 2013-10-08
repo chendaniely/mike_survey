@@ -152,7 +152,7 @@ def example_screen(example_data_list):
     os.system(['clear', 'cls'][os.name == 'nt'])
     first_name = raw_input("Please type in your FIRST name and press ENTER:")
     last_name = raw_input("Please type in your LAST name and press ENTER:")
-    id = raw_input("Please type in your ID for this test and press ENTER:")
+    id = raw_input("Please type in your PID for this test and press ENTER:")
     prefix = last_name + "_" + id
     fileout = open(last_name + "_" + id + ".txt", 'w')
     raw_input("We'll start with a practice input.  Press ENTER to BEGIN...")
