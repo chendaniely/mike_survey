@@ -386,7 +386,7 @@ if __name__ == "__main__":
     example_list, example_sol = read_in_ex_data(file_in_ex)
     data_list, dict_sol = read_in_question_data(file_in)
     test_list = data_list
-    fp, prefix = example_screen(example_list[0:5])
+    fp, prefix = example_screen(example_list[0:6])
     create_backup_file(prefix, data_list)
 
     print "This is the end of the practice session."
