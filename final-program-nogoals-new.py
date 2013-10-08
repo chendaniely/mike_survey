@@ -152,7 +152,7 @@ def example_screen(example_data_list):
     os.system(['clear', 'cls'][os.name == 'nt'])
     first_name = raw_input("Please type in your FIRST name and press ENTER:")
     last_name = raw_input("Please type in your LAST name and press ENTER:")
-    id = raw_input("Please type in your ID for this test and press ENTER:")
+    id = raw_input("Please type in your PID for this test and press ENTER:")
     prefix = last_name + "_" + id
     fileout = open(last_name + "_" + id + ".txt", 'w')
     raw_input("We'll start with a practice input.  Press ENTER to BEGIN...")
@@ -164,7 +164,7 @@ def example_screen(example_data_list):
         answer_list.append(x)
         print_summary_ex(answer_list, last)
         print "Do not enter your estimate until prompted."
-        time.sleep(5)
+        time.sleep(4.5)
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
