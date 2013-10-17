@@ -296,7 +296,7 @@ def print_summary(data_list, last):
         else:
             if isinstance(x[7], int) and isinstance(last, int):
                 diff = int(x[7]) - int(x[6])
-                if math.fabs(diff) <= 10:
+                if math.fabs(diff) <= 7:
                     goal_check = "YES"
                 else:
                     goal_check = "NO"
@@ -306,7 +306,7 @@ def print_summary(data_list, last):
 
     print "\n"
     print "Remember, this task is an important determinant of your performance evaluation." 
-    print "Your goal is to be within +/- $10 of the actual stock price for this week's estimate."
+    print "Your goal is to be within +/- $7 of the actual stock price for this week's estimate."
     print "\n"
 
 def print_summary_ex(data_list, last):
@@ -394,7 +394,7 @@ def print_summary_ex(data_list, last):
         else:
             if isinstance(x[7], int) and isinstance(last, int):
                 diff = int(x[7]) - int(x[6])
-                if math.fabs(diff) <= 10:
+                if math.fabs(diff) <= 7:
                     goal_check = "YES"
                 else:
                     goal_check = "NO"
@@ -404,7 +404,7 @@ def print_summary_ex(data_list, last):
 
     print "\n"
     print "Remember, this task is an important determinant of your performance evaluation." 
-    print "Your goal is to be within +/- $10 of the actual stock price for this week's estimate."
+    print "Your goal is to be within +/- $7 of the actual stock price for this week's estimate."
     print "\n"
 
 def print_file(list, file):
