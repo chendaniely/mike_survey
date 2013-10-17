@@ -288,7 +288,7 @@ def print_summary(data_list, last):
 
     print "\n"
     print "Remember, this task is an important determinant of your performance evaluation." 
-    print "You should identify and implement 5 effective strategies to maximize your performance on this task."
+    print "Your goal is to identify and implement 7 effective strategies to maximize your performance on this task."
     print "\n"
 
 
@@ -369,7 +369,7 @@ def print_summary_ex(data_list, last):
 
     print "\n"
     print "Remember, this task is an important determinant of your performance evaluation." 
-    print "You should identify and implement 5 effective strategies to maximize your performance on this task."
+    print "Your goal is to identify and implement 7 effective strategies to maximize your performance on this task."
     print "\n"
 
 
