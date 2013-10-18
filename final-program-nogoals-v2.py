@@ -186,7 +186,6 @@ def survey(data_list, file_out):
     answer_list = []
     last = "NA"
     for n, x in enumerate(data_list):
-        fp = open(file_out, 'a')
         os.system(['clear', 'cls'][os.name == 'nt'])
         answer_list.append(x)
 
@@ -207,8 +206,8 @@ def survey(data_list, file_out):
         answer_list[n][9] = last
         time.sleep(1)
         for x in answer_list[n]:
-            fp.write('%s,' % str(x))
-        fp.write('\n')
+            file_out.write('%s,' % str(x))
+        file_out.write('\n')
         os.system(['clear', 'cls'][os.name == 'nt'])
         
 
