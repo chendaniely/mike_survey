@@ -155,7 +155,6 @@ def example_screen(example_data_list):
     id = raw_input("Please type in your PID for this test and press ENTER:")
     prefix = last_name + "_" + id
     fileout = open(last_name + "_" + id + ".txt", 'w')
-    fileout.close()
     raw_input("We'll start with a practice input.  Press ENTER to BEGIN...")
     os.system(['clear', 'cls'][os.name == 'nt'])
     answer_list = []
@@ -187,7 +186,7 @@ def survey(data_list, file_out):
     answer_list = []
     last = "NA"
     for n, x in enumerate(data_list):
-        fp = open(file_out, 'w')
+        fp = open(file_out, 'a')
         os.system(['clear', 'cls'][os.name == 'nt'])
         answer_list.append(x)
 
