@@ -208,6 +208,7 @@ def survey(data_list, file_out):
         for x in answer_list[n]:
             file_out.write('%s,' % str(x))
         file_out.write('\n')
+        file_out.flush()
         os.system(['clear', 'cls'][os.name == 'nt'])
         
 
