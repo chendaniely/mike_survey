@@ -2,13 +2,15 @@
 
 import threading
 import select
-import sys, os
+import sys
+import os
 import time
 import random
 from sys import stdout
 from time import sleep
 import math
 import termios
+
 
 class QuestionInput:
     def __init__(self):
@@ -26,17 +28,22 @@ class QuestionInput:
         tl = None
 
         try:
-            resp = self.epoll.poll(time_limit) #This checks to see if there is activity on the file descriptor we registered above (stdin)
-            
-            # Don't worry too much about what epoll.poll returns, 
-            # just know that in this case if it returns a tuple of length > 0 that means the user typed something AND pressed enter
+            # This checks to see if there is activity on the file descriptor
+            # we registered above (stdin)
+            resp = self.epoll.poll(time_limit)
+
+            # Don't worry too much about what epoll.poll returns,
+            # just know that in this case if it returns a tuple of length > 0
+            # that means the user typed something AND pressed enter
             if len(resp) == 0:
                 sys.stdout.write("\n")
                 print 'Your time is out.'
                 user_input = ''
                 tl = 0
             else:
-                user_input = raw_input() #Read what the user typed from stdin this will have the trailing newline
+                # Read what the user typed from stdin
+                # this will have the trailing newline
+                user_input = raw_input()
                 try:
                     ret = int(user_input.strip())
                     tl = self.time_left
@@ -44,7 +51,7 @@ class QuestionInput:
                     ret = user_input
         except:
             pass
-        
+
         self.timer.cancel()
         termios.tcflush(sys.stdin, termios.TCIFLUSH)
         return ret, tl
@@ -59,6 +66,7 @@ class QuestionInput:
         else:
             self.timer = threading.Timer(1, self._update)
             self.timer.start()
+
 
 def read_in_ex_data(file_in):
     list_of_data = []
@@ -77,9 +85,11 @@ def read_in_ex_data(file_in):
             time = ''
             difference = "?"
             d_solutions[id] = price_correct
-            data_tuple = [random_id, id, adv, mrksh, revg, price_d, price_correct, price_guess, time, difference]
+            data_tuple = [random_id, id, adv, mrksh, revg, price_d,
+                          price_correct, price_guess, time, difference]
             list_of_data.append(data_tuple)
     return list_of_data, d_solutions
+
 
 def create_backup_file(prefix, list):
     fp = open(prefix + "_rawdata.csv", 'w')
@@ -87,6 +97,7 @@ def create_backup_file(prefix, list):
         for y in x:
             fp.write('%s\t' % y)
         fp.write("\n")
+
 
 def read_in_backup_data(file_in):
     list_of_data = []
@@ -105,9 +116,11 @@ def read_in_backup_data(file_in):
             time = ''
             difference = "?"
             d_solutions[id] = price_correct
-            data_tuple = [random_id, id, adv, mrksh, revg, price_d, price_correct, price_guess, time, difference]
+            data_tuple = [random_id, id, adv, mrksh, revg, price_d,
+                          price_correct, price_guess, time, difference]
             list_of_data.append(data_tuple)
     return list_of_data, d_solutions
+
 
 def read_in_question_data(file_in):
     random1_start = 0
@@ -132,7 +145,8 @@ def read_in_question_data(file_in):
             time = ''
             last_guess = "NA"
             d_solutions[id] = price_correct
-            data_tuple = [random_id, id, adv, mrksh, revg, price_d, price_correct, price_guess, time, last_guess]
+            data_tuple = [random_id, id, adv, mrksh, revg, price_d,
+                          price_correct, price_guess, time, last_guess]
             list_of_data.append(data_tuple)
     list1 = list_of_data[random1_start:random1_end]
     list2 = list_of_data[random2_start:random2_end]
@@ -166,7 +180,9 @@ def example_screen(example_data_list):
         print "Do not enter your estimate until prompted."
         time.sleep(4.5)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
+        resp, t = qi.pose_query("Based on the performance information above,\
+                                 what is your estimated stock price for this\
+                                 organization?  ", 15)
         guess = 0
         if guess == '':
             guess = None
@@ -180,6 +196,7 @@ def example_screen(example_data_list):
         time.sleep(1)
         os.system(['clear', 'cls'][os.name == 'nt'])
     return fileout, prefix
+
 
 def survey(data_list, file_out):
     os.system(['clear', 'cls'][os.name == 'nt'])
@@ -215,7 +232,7 @@ def survey(data_list, file_out):
 def print_summary(data_list, last):
     last_five = []
     length_list = len(data_list)
-    count = 0 
+    count = 0
     if length_list < 5:
         for i in range(0, length_list):
             dat = data_list[i]
@@ -236,20 +253,20 @@ def print_summary(data_list, last):
         elif n == (len(last_five) - 2):
             print "\t1 Week Ago",
         elif n == (len(last_five) - 3):
-            print "\t2 Weeks Ago", 
+            print "\t2 Weeks Ago",
         elif n == (len(last_five) - 4):
             print "\t3 Weeks Ago",
         elif n == (len(last_five) - 5):
-            print "\t4 Weeks Ago", 
+            print "\t4 Weeks Ago",
     print '\n',
     print '\t',
 
     for n, x in enumerate(last_five):
         print "\t(Week " + str(x[0]) + ") ",
-        
-    print '\n', 
 
-    print "\nAdvertising", 
+    print '\n',
+
+    print "\nAdvertising",
     for x in last_five:
         print "\t" + x[2] + "\t",
 
@@ -286,7 +303,7 @@ def print_summary(data_list, last):
                 diff = "NA"
             except TypeError:
                 diff = "NA"
-            
+
 
         print "\t$" + str(diff) + "\t",
 
@@ -306,14 +323,15 @@ def print_summary(data_list, last):
         print "\t" + goal_check + "\t",
 
     print "\n"
-    print "Remember, this task is an important determinant of your performance evaluation." 
+    print "Remember, this task is an important determinant of your performance evaluation."
     print "Your goal is to be within +/- $7 of the actual stock price for this week's estimate."
     print "\n"
+
 
 def print_summary_ex(data_list, last):
     last_five = []
     length_list = len(data_list)
-    count = 0 
+    count = 0
     if length_list < 5:
         for i in range(0, length_list):
             dat = data_list[i]
@@ -334,20 +352,20 @@ def print_summary_ex(data_list, last):
         elif n == (len(last_five) - 2):
             print "\t1 Week Ago",
         elif n == (len(last_five) - 3):
-            print "\t2 Weeks Ago", 
+            print "\t2 Weeks Ago",
         elif n == (len(last_five) - 4):
             print "\t3 Weeks Ago",
         elif n == (len(last_five) - 5):
-            print "\t4 Weeks Ago", 
+            print "\t4 Weeks Ago",
     print '\n',
     print '\t',
 
     for n, x in enumerate(last_five):
         print "\t(Week " + str(x[0]) + ") ",
-        
-    print '\n', 
 
-    print "\nSocial Rep", 
+    print '\n',
+
+    print "\nSocial Rep",
     for x in last_five:
         print "\t" + x[2] + "\t",
 
@@ -384,7 +402,7 @@ def print_summary_ex(data_list, last):
                 diff = "NA"
             except TypeError:
                 diff = "NA"
-            
+
 
         print "\t$" + str(diff) + "\t",
 
@@ -404,7 +422,7 @@ def print_summary_ex(data_list, last):
         print "\t" + goal_check + "\t",
 
     print "\n"
-    print "Remember, this task is an important determinant of your performance evaluation." 
+    print "Remember, this task is an important determinant of your performance evaluation."
     print "Your goal is to be within +/- $7 of the actual stock price for this week's estimate."
     print "\n"
 
@@ -430,4 +448,3 @@ if __name__ == "__main__":
     survey(test_list, fp)
     os.system(['clear', 'cls'][os.name == 'nt'])
     print "Thank you, this completes the exercise."
-
