@@ -260,7 +260,7 @@ def example_screen(example_data_list):
         answer_list.append(x)
         print_summary_ex(answer_list, last)
         print "Do not enter your estimate until prompted."
-        time.sleep(4.5)
+        time.sleep(.1)  # default time 4.5
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
@@ -273,7 +273,7 @@ def example_screen(example_data_list):
         answer_list[n][7], answer_list[n][8] = resp, t
         last = guess
         answer_list[n][9] = last
-        time.sleep(1)
+        time.sleep(.1) # default time 1
         os.system(['clear', 'cls'][os.name == 'nt'])
     return fileout, prefix
 
@@ -308,7 +308,7 @@ def survey(data_list, file_out, condition_text_list):
 
         print_summary(answer_list, last)
         print "Do not enter your estimate until prompted"
-        time.sleep(4.5)
+        time.sleep(.1)  # default time 4.5
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
@@ -321,7 +321,7 @@ def survey(data_list, file_out, condition_text_list):
         answer_list[n][7], answer_list[n][8] = resp, t
         last = guess
         answer_list[n][9] = last
-        time.sleep(1)
+        time.sleep(.1)  # default time 1
         for x in answer_list[n]:
             file_out.write('%s,' % str(x))
         file_out.write('\n')
