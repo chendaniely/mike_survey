@@ -329,6 +329,18 @@ def survey(data_list, file_out):
         os.system(['clear', 'cls'][os.name == 'nt'])
 
 
+
+def print_condition_text(condition_text):
+    os.system(['clear', 'cls'][os.name == 'nt'])
+    text = '''\n\n\n\n\n '''
+    text += condition_text
+    text += '''\n\n\n\n\n'''
+    print text
+    response = raw_input('''press continue key to continue... ''')
+    os.system(['clear', 'cls'][os.name == 'nt'])
+
+
+
 def print_summary(data_list, last):
     '''
     prints the past 5 questions and user responses to screen
