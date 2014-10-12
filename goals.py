@@ -535,6 +535,24 @@ def print_file(list, file):
             file.write("%s\t" % y)
         file.write("\n")
 
+
+def pick_condition_file():
+    conditions = glob.glob("./messageConditions/*.txt")
+    condition = random.sample(conditions, 1)[0]
+    print condition
+    return condition
+
+
+def read_condition_file_to_list(condition_file_dir):
+    list_of_text = []
+    with open(condition_file_dir, 'r') as f:
+        for line in f:
+            line_string = str(line)
+            # print line_string
+            list_of_text.append(line)
+    return list_of_text
+
+
 if __name__ == "__main__":
     number_of_trials = 180
     file_in = open("./chosen_sim_data.csv")
