@@ -331,8 +331,8 @@ def survey(data_list, file_out, condition_text_list):
         if n % 15 == 0:
             # we are at a decision trials that is a multiple of 15
             # aka a measurement occasion
-            print_condition_text(condition_text[condition_text_index])
-            condition_text_index += 1
+            print_condition_text(condition_text_list[condition_text_index])
+            condition_text_index
             take_bp_and_pulse()
 
             if n / 15 in (4, 8):
