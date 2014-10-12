@@ -328,7 +328,7 @@ def survey(data_list, file_out, condition_text_list):
         file_out.flush()
         os.system(['clear', 'cls'][os.name == 'nt'])
 
-        if n % 15 == 0:
+        if n > 14 and n % 15 == 0:
             # we are at a decision trials that is a multiple of 15
             # aka a measurement occasion
             print_condition_text(condition_text_list[condition_text_index])
