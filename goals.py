@@ -278,7 +278,7 @@ def example_screen(example_data_list):
     return fileout, prefix
 
 
-def survey(data_list, file_out, condition_text_list):
+def survey(data_list, file_out, condition_number, condition_text_list):
     '''
     Main survey call, writes user responses into a lastName_id.txt file
 
@@ -600,8 +600,9 @@ if __name__ == "__main__":
 
     condition = pick_condition_file()
     list_of_condition_text = read_condition_file_to_list(condition)
+    condition_number = parse_condition_file_to_int(condition)
 
-    survey(test_list, fp, list_of_condition_text)
+    survey(test_list, fp, condition_number, list_of_condition_text)
 
     os.system(['clear', 'cls'][os.name == 'nt'])
     print "Thank you, this completes the exercise."
