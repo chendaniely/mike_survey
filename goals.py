@@ -262,9 +262,7 @@ def example_screen(example_data_list):
         print "Do not enter your estimate until prompted."
         time.sleep(4.5)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Based on the performance information above,\
-                                 what is your estimated stock price for this\
-                                 organization?  ", 15)
+        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
         if guess == '':
             guess = None
@@ -312,8 +310,7 @@ def survey(data_list, file_out, condition_text_list):
         print "Do not enter your estimate until prompted"
         time.sleep(4.5)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Based on the performance information above,\
-        what is your estimated stock price for this organization?  ", 15)
+        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
         if guess == '':
             guess = 0
