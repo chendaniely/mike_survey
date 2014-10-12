@@ -352,12 +352,24 @@ def print_condition_text(condition_text):
 
 
 def take_bp_and_pulse():
-    pass
+    '''
+    asks user to enter bp and pulse
+    '''
+    text = '''\n\n\n\n\nPlease take your blood pressure and pulse
+    The test will begin after you enter your pulse'''
+    print(text)
+    diastolic = int(raw_input("What is your diastolic blood pressure? "))
+    systolic = int(raw_input("What is your systolic blood pressure? "))
+    pulse = int(raw_input("What is your pulse? "))
+
+    return diastolic, systolic, pulse
 
 
 def take_survey():
-    pass
-
+    text = '\n\n\n\n\n'
+    text += 'Please switch windows to complete a short 2 minute survey'
+    print(text)
+    raw_input("Press enter when you are ready to resume the test")
 
 def print_summary(data_list, last):
     '''
@@ -582,6 +594,12 @@ def read_condition_file_to_list(condition_file_dir):
             # print line_string
             list_of_text.append(line)
     return list_of_text
+
+
+def parse_condition_file_to_int(condition_file_dir):
+    parts = condition_file_dir.split("_")
+    # print(parts)
+    return parts[1]
 
 
 if __name__ == "__main__":
