@@ -303,6 +303,7 @@ def survey(data_list, file_out, condition_text_list):
     os.system(['clear', 'cls'][os.name == 'nt'])
     answer_list = []
     last = "NA"
+    condition_text_index = 0
     for n, x in enumerate(data_list):
         os.system(['clear', 'cls'][os.name == 'nt'])
         answer_list.append(x)
@@ -330,6 +331,11 @@ def survey(data_list, file_out, condition_text_list):
         file_out.flush()
         os.system(['clear', 'cls'][os.name == 'nt'])
 
+        if n % 15 == 0:
+            # we are at a decision trials that is a multiple of 15
+            # aka a measurement occasion
+            print_condition_text(condition_text[condition_text_index])
+            condition_text_index += 1
 
 
 def print_condition_text(condition_text):
