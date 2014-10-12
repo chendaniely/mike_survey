@@ -338,6 +338,11 @@ def survey(data_list, file_out, condition_text_list):
             condition_text_index += 1
             take_bp_and_pulse()
 
+            if n / 15 in (4, 8):
+                # we are at decision trial 60 or 120 for a 2min survey
+                # aka measurement occasion 4 or 8
+                take_survey()
+
 
 def print_condition_text(condition_text):
     os.system(['clear', 'cls'][os.name == 'nt'])
