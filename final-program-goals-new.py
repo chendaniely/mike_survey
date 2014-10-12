@@ -69,11 +69,43 @@ class QuestionInput:
 
 
 def read_in_ex_data(file_in):
+    '''
+    takes in a file and returns
+    parameters
+    ----------
+    file_in: string that represents the csv file for the example cases
+
+    returns
+    -------
+    data of the file read in
+    list_of_data: a 2d list, that is a list of the lines in the file,
+                  where each line of the file is converted into a list
+                  of the individual parts of the line
+    d_solutions: dictionary where the key is the trialnumber,
+                 and value is the correct stock price response
+
+    # for each line we split it by comma
+    # assign each value to:
+    # id: question ID number
+    # random_id is the integer representatino of the ID
+    # adv:
+    # mrksh:
+    # revg:
+    # price_d:
+    # price_correct: the correct price
+    # price_guess:
+    # time:
+    # difference:
+    # d_solutions: dictionary where key is the ID, value is the correct answer
+    # data_tuple: is a list (not a tuple) of the parts of the file read in
+
+    '''
     list_of_data = []
     d_solutions = {}
     for n, line in enumerate(file_in):
         if n > 0:
             dat = line.rstrip().split(',')
+            # id is a built in python function... why is this assigned a value?
             id = int(dat[0])
             random_id = id
             adv = dat[1]
@@ -92,6 +124,21 @@ def read_in_ex_data(file_in):
 
 
 def create_backup_file(prefix, list):
+    '''
+    writes a lastName_id_rawdata.csv file given the given the prefix
+    and writes a tab-delimited file where each line is the d1 of the list
+    and the individual elements are d2 of the list separated by tabs
+
+    parameters
+    ----------
+    prefix: string, lastName_id
+    list: 2d list of questions
+
+    returns
+    ------
+    None
+    '''
+
     fp = open(prefix + "_rawdata.csv", 'w')
     for x in list:
         for y in x:
@@ -123,6 +170,19 @@ def read_in_backup_data(file_in):
 
 
 def read_in_question_data(file_in):
+    '''
+    parameters
+    ----------
+    file to read in
+
+    returns
+    -------
+    list1: shuffled list of the file that contain the line parts
+    d_solutions: dictionary where the key is the ID,
+                 and value is the correct answer
+    '''
+    # these cutoffs are to break up the file that is read in
+    # so 3 lists can be created, then suffeled, and finally stiched back
     random1_start = 0
     random1_end = 90
     random2_start = 90
@@ -148,6 +208,8 @@ def read_in_question_data(file_in):
             data_tuple = [random_id, id, adv, mrksh, revg, price_d,
                           price_correct, price_guess, time, last_guess]
             list_of_data.append(data_tuple)
+    # splits the list of data into 3 parts
+    # and randomly shuffles each part before combining it back
     list1 = list_of_data[random1_start:random1_end]
     list2 = list_of_data[random2_start:random2_end]
     list3 = list_of_data[random3_start:random3_end]
@@ -156,6 +218,8 @@ def read_in_question_data(file_in):
     random.shuffle(list3)
     list1.extend(list2)
     list1.extend(list3)
+
+    # reset the index after the shuffle for the list so it is sequential
     for n, x in enumerate(list1):
         x[0] = n
 
@@ -163,6 +227,23 @@ def read_in_question_data(file_in):
 
 
 def example_screen(example_data_list):
+    '''
+    clears the screen
+    gets the first name, last name, id
+    names file using lastname_id
+
+    iterates through example_data_list
+
+    parameters
+    ----------
+    example_data_list: 2d list of example questions returned by the
+                       read_in_ex_data function
+
+    returns
+    -------
+    fileout: lastName_id.txt file in write mode
+    prefix: lastName_id that will be used to name the file
+    '''
     os.system(['clear', 'cls'][os.name == 'nt'])
     first_name = raw_input("Please type in your FIRST name and press ENTER:")
     last_name = raw_input("Please type in your LAST name and press ENTER:")
@@ -199,6 +280,24 @@ def example_screen(example_data_list):
 
 
 def survey(data_list, file_out):
+    '''
+    Main survey call, writes user responses into a lastName_id.txt file
+
+    parameters
+    ----------
+    data_list: 2d list where d1 is the information for each question
+               d2 is the individual components of each question to be used
+               is the user prompt
+    file_out: file handler, lastName_id.txt, from example_screen()
+
+    returns
+    -------
+    none
+
+    variables used in function
+    --------------------------
+    answer_list: list: elements of each question is appended here
+    '''
     os.system(['clear', 'cls'][os.name == 'nt'])
     answer_list = []
     last = "NA"
@@ -210,7 +309,8 @@ def survey(data_list, file_out):
         print "Do not enter your estimate until prompted"
         time.sleep(4.5)
         qi = QuestionInput()
-        resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
+        resp, t = qi.pose_query("Based on the performance information above,\
+        what is your estimated stock price for this organization?  ", 15)
         guess = 0
         if guess == '':
             guess = 0
@@ -230,6 +330,9 @@ def survey(data_list, file_out):
 
 
 def print_summary(data_list, last):
+    '''
+    prints the past 5 questions and user responses to screen
+    '''
     last_five = []
     length_list = len(data_list)
     count = 0
