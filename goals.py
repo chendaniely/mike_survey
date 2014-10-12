@@ -279,7 +279,7 @@ def example_screen(example_data_list):
     return fileout, prefix
 
 
-def survey(data_list, file_out):
+def survey(data_list, file_out, condition_text_list):
     '''
     Main survey call, writes user responses into a lastName_id.txt file
 
