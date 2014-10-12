@@ -290,6 +290,7 @@ def survey(data_list, file_out, condition_text_list):
                d2 is the individual components of each question to be used
                is the user prompt
     file_out: file handler, lastName_id.txt, from example_screen()
+    condition_text_list: list: list of text for condition
 
     returns
     -------
