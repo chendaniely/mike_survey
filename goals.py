@@ -324,21 +324,27 @@ def survey(data_list, file_out, condition_number, condition_text_list):
         time.sleep(.1)  # default time 1
         for x in answer_list[n]:
             file_out.write('%s,' % str(x))
-        file_out.write('\n')
+        # file_out.write('\n')
         file_out.flush()
         os.system(['clear', 'cls'][os.name == 'nt'])
 
-        if n > 14 and n % 15 == 0:
+        if (((n + 1) > 14) and ((n + 1) % 15 == 0)):
             # we are at a decision trials that is a multiple of 15
             # aka a measurement occasion
             print_condition_text(condition_text_list[condition_text_index])
             condition_text_index
-            take_bp_and_pulse()
+            file_out.write('%s,' % str(condition_number))
+            diastolic, systolic, pulse = take_bp_and_pulse()
+            file_out.write('%s,' % str(diastolic))
+            file_out.write('%s,' % str(systolic))
+            file_out.write('%s,' % str(pulse))
 
-            if n / 15 in (4, 8):
+            if ((n + 1) / 15) in (4, 8):
                 # we are at decision trial 60 or 120 for a 2min survey
                 # aka measurement occasion 4 or 8
                 take_survey()
+
+        file_out.write('\n')
 
 
 def print_condition_text(condition_text):
