@@ -567,6 +567,10 @@ if __name__ == "__main__":
     print "This concludes your practice trials."
     raw_input("Do not press anything until instructed.")
 
-    survey(test_list, fp)
+    condition = pick_condition_file()
+    list_of_condition_text = read_condition_file_to_list(condition)
+
+    survey(test_list, fp, list_of_condition_text)
+
     os.system(['clear', 'cls'][os.name == 'nt'])
     print "Thank you, this completes the exercise."
