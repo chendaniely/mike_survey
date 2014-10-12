@@ -342,6 +342,13 @@ def print_condition_text(condition_text):
     os.system(['clear', 'cls'][os.name == 'nt'])
 
 
+def take_bp_and_pulse():
+    pass
+
+
+def take_survey():
+    pass
+
 
 def print_summary(data_list, last):
     '''
@@ -542,6 +549,7 @@ def print_summary_ex(data_list, last):
     print "Remember, this task is an important determinant of your performance evaluation."
     print "Your goal is to be within +/- $7 of the actual stock price for this week's estimate."
     print "\n"
+
 
 def print_file(list, file):
     for x in list:
