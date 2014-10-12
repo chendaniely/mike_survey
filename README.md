@@ -2,15 +2,15 @@ mike_survey
 ===========
 To install:
 
-git clone git://github.com/adina/mike_survey.git
+`git clone git://github.com/chendaniely/mike_survey.git`
 
-cd mike_survey
+`cd mike_survey`
 
 To run:
 
 Goals:
 
-python final-program-goals-new.py
+`python goals.py`
 
 No Goals:
 
