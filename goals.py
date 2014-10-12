@@ -336,6 +336,7 @@ def survey(data_list, file_out, condition_text_list):
             # aka a measurement occasion
             print_condition_text(condition_text[condition_text_index])
             condition_text_index += 1
+            take_bp_and_pulse()
 
 
 def print_condition_text(condition_text):
