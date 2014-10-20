@@ -38,7 +38,7 @@ class QuestionInput:
             # that means the user typed something AND pressed enter
             if len(resp) == 0:
                 sys.stdout.write("\n")
-                print 'Your time is out.'
+                print('Your time is out.')
                 user_input = ''
                 tl = 0
             else:
@@ -259,21 +259,21 @@ def example_screen(example_data_list):
         os.system(['clear', 'cls'][os.name == 'nt'])
         answer_list.append(x)
         print_summary_ex(answer_list, last)
-        print "Do not enter your estimate until prompted."
+        print("Do not enter your estimate until prompted.")
         time.sleep(.1)  # default time 4.5
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
         if guess == '':
             guess = None
-            print "Your guess was recorded as $None", guess
+            print("Your guess was recorded as $None", guess)
         else:
             guess = resp
-            print "Your guess was recorded as $", guess
+            print("Your guess was recorded as $", guess)
         answer_list[n][7], answer_list[n][8] = resp, t
         last = guess
         answer_list[n][9] = last
-        time.sleep(.1) # default time 1
+        time.sleep(.1)  # default time 1
         os.system(['clear', 'cls'][os.name == 'nt'])
     return fileout, prefix
 
@@ -307,17 +307,17 @@ def survey(data_list, file_out, condition_number, condition_text_list):
         answer_list.append(x)
 
         print_summary(answer_list, last)
-        print "Do not enter your estimate until prompted"
+        print("Do not enter your estimate until prompted")
         time.sleep(.1)  # default time 4.5
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
         if guess == '':
             guess = 0
-            print "Your guess was recorded as $None", guess
+            print("Your guess was recorded as $None", guess)
         else:
             guess = resp
-            print "Your guess was recorded as $", guess
+            print("Your guess was recorded as $", guess)
         answer_list[n][7], answer_list[n][8] = resp, t
         last = guess
         answer_list[n][9] = last
@@ -352,7 +352,7 @@ def print_condition_text(condition_text):
     text = '''\n\n\n\n\n '''
     text += condition_text
     text += '''\n\n\n\n\n'''
-    print text
+    print(text)
     response = raw_input('''press continue key to continue... ''')
     os.system(['clear', 'cls'][os.name == 'nt'])
 
@@ -377,6 +377,7 @@ def take_survey():
     print(text)
     raw_input("Press enter when you are ready to resume the test")
 
+
 def print_summary(data_list, last):
     '''
     prints the past 5 questions and user responses to screen
@@ -395,8 +396,8 @@ def print_summary(data_list, last):
             last_five.append(dat)
         count += 1
 
-    print "Summary of Past Performance (Last 4 weeks)"
-    print '\n'
+    print("Summary of Past Performance (Last 4 weeks)")
+    print('\n')
     print "\t",
     for n, x in enumerate(last_five):
         if n == (len(last_five) - 1):
@@ -440,7 +441,7 @@ def print_summary(data_list, last):
 
     print "\nYour Estimate",
     for x in last_five:
-         print "\t$" + str(x[7]) + "\t",
+        print "\t$" + str(x[7]) + "\t",
 
     print "\n\nDifference",
     for n, x in enumerate(last_five):
@@ -454,7 +455,6 @@ def print_summary(data_list, last):
                 diff = "NA"
             except TypeError:
                 diff = "NA"
-
 
         print "\t$" + str(diff) + "\t",
 
@@ -474,8 +474,10 @@ def print_summary(data_list, last):
         print "\t" + goal_check + "\t",
 
     print "\n"
-    print "Remember, this task is an important determinant of your performance evaluation."
-    print "Your goal is to be within +/- $7 of the actual stock price for this week's estimate."
+    print("Remember, this task is an important determinant of your " +
+          "performance evaluation.")
+    print("Your goal is to be within +/- $7 of the actual stock price for " +
+          "this week's estimate.")
     print "\n"
 
 
@@ -539,7 +541,7 @@ def print_summary_ex(data_list, last):
 
     print "\nYour Estimate",
     for x in last_five:
-         print "\t$" + str(x[7]) + "\t",
+        print "\t$" + str(x[7]) + "\t",
 
     print "\n\nDifference",
     for n, x in enumerate(last_five):
@@ -553,7 +555,6 @@ def print_summary_ex(data_list, last):
                 diff = "NA"
             except TypeError:
                 diff = "NA"
-
 
         print "\t$" + str(diff) + "\t",
 
@@ -573,8 +574,10 @@ def print_summary_ex(data_list, last):
         print "\t" + goal_check + "\t",
 
     print "\n"
-    print "Remember, this task is an important determinant of your performance evaluation."
-    print "Your goal is to be within +/- $7 of the actual stock price for this week's estimate."
+    print("Remember, this task is an important determinant of your " +
+          "performance evaluation.")
+    print("Your goal is to be within +/- $7 of the actual stock price " +
+          "for this week's estimate.")
     print "\n"
 
 
