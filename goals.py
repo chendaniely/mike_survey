@@ -590,8 +590,16 @@ def print_file(list, file):
 
 def pick_condition_file():
     conditions = glob.glob("./messageConditions/*.txt")
-    condition = random.sample(conditions, 1)[0]
-    print condition
+    conditions.sort()
+    # print "conditions: ", conditions
+    weighted_condition_number = [1, 1, 2, 2, 3, 3, 4, 4, 5, 6, 7, 8]
+    condition_number = int(random.sample(weighted_condition_number, 1)[0])
+    # print condition_number
+    # condition = random.sample(conditions, 1)[0]
+    condition = conditions[condition_number - 1]
+    # print condition
+    assert int(condition.split('_')[1]) == condition_number
+    # print condition
     return condition
 
 

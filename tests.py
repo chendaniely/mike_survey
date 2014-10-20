@@ -6,7 +6,7 @@ import goals
 
 def test_pick_condition_file():
     random.seed(2)
-    expected_file = "./messageConditions/condition_4_onetime_fair.txt"
+    expected_file = "./messageConditions/condition_8_random_2_rev_random_1.txt"
     assert goals.pick_condition_file() == expected_file
 
 
