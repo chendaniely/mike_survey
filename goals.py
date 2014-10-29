@@ -335,8 +335,8 @@ def survey(data_list, file_out, condition_number, condition_text_list):
             condition_text_index += 1
             file_out.write('%s,' % str(condition_number))
             diastolic, systolic, pulse = take_bp_and_pulse()
-            file_out.write('%s,' % str(diastolic))
             file_out.write('%s,' % str(systolic))
+            file_out.write('%s,' % str(diastolic))
             file_out.write('%s,' % str(pulse))
 
             if ((n + 1) / 15) in (4, 8):
@@ -345,6 +345,7 @@ def survey(data_list, file_out, condition_number, condition_text_list):
                 take_survey()
 
         file_out.write('\n')
+    take_final_survey()
 
 
 def print_condition_text(condition_text):
@@ -398,6 +399,17 @@ def take_survey():
     text += 'Please switch windows to complete a short 2 minute survey'
     print(text)
     raw_input("Press enter when you are ready to resume the test")
+
+
+def take_final_survey():
+    os.system(['clear', 'cls'][os.name == 'nt'])
+    text = '\n\n\n\n\n'
+    text += 'Thank you, this completes the exercise.'
+
+    text = '\n\n\n\n\n'
+    text += 'Please switch to the other window and complete the survey'
+    print(text)
+    raw_input("Press enter when you are done to exit the session")
 
 
 def print_summary(data_list, last):
