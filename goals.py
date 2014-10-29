@@ -366,9 +366,27 @@ def take_bp_and_pulse():
     text = '''\n\n\n\n\nPlease take your blood pressure and pulse
     The test will begin after you enter your pulse'''
     print(text)
-    diastolic = int(raw_input("What is your diastolic blood pressure? "))
-    systolic = int(raw_input("What is your systolic blood pressure? "))
-    pulse = int(raw_input("What is your pulse? "))
+    while True:
+        try:
+            pulse = float(raw_input("What is your pulse (BPM)? "))
+        except ValueError:
+            continue
+        else:
+            break
+    while True:
+        try:
+            systolic = float(raw_input("What is your systolic blood pressure SYS? "))
+        except ValueError:
+            continue
+        else:
+            break
+    while True:
+        try:
+            diastolic = float(raw_input("What is your diastolic blood pressure DIA? "))
+        except ValueError:
+            continue
+        else:
+            break
 
     return diastolic, systolic, pulse
 
