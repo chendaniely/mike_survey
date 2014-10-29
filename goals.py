@@ -363,8 +363,9 @@ def take_bp_and_pulse():
     '''
     asks user to enter bp and pulse
     '''
+    os.system(['clear', 'cls'][os.name == 'nt'])
     text = '''\n\n\n\n\nPlease take your blood pressure and pulse
-    The test will begin after you enter your pulse'''
+    The test will begin after you enter your diastolic blood pressure (DIA)'''
     print(text)
     while True:
         try:
@@ -392,6 +393,7 @@ def take_bp_and_pulse():
 
 
 def take_survey():
+    os.system(['clear', 'cls'][os.name == 'nt'])
     text = '\n\n\n\n\n'
     text += 'Please switch windows to complete a short 2 minute survey'
     print(text)
