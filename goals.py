@@ -332,7 +332,7 @@ def survey(data_list, file_out, condition_number, condition_text_list):
             # we are at a decision trials that is a multiple of 15
             # aka a measurement occasion
             print_condition_text(condition_text_list[condition_text_index])
-            condition_text_index
+            condition_text_index += 1
             file_out.write('%s,' % str(condition_number))
             diastolic, systolic, pulse = take_bp_and_pulse()
             file_out.write('%s,' % str(diastolic))
