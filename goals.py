@@ -458,26 +458,26 @@ def print_summary(data_list, last):
 
         print "\t$" + str(diff) + "\t",
 
-    print "\nAchieved Goal",
-    for n, x in enumerate(last_five):
-        if n == (len(last_five) - 1):
-            goal_check = ""
-        else:
-            if isinstance(x[7], int) and isinstance(last, int):
-                diff = int(x[7]) - int(x[6])
-                if math.fabs(diff) <= 7:
-                    goal_check = "YES"
-                else:
-                    goal_check = "NO"
-            else:
-                goal_check = "NO"
-        print "\t" + goal_check + "\t",
+    # print "\nAchieved Goal",
+    # for n, x in enumerate(last_five):
+    #     if n == (len(last_five) - 1):
+    #         goal_check = ""
+    #     else:
+    #         if isinstance(x[7], int) and isinstance(last, int):
+    #             diff = int(x[7]) - int(x[6])
+    #             if math.fabs(diff) <= 7:
+    #                 goal_check = "YES"
+    #             else:
+    #                 goal_check = "NO"
+    #         else:
+    #             goal_check = "NO"
+    #     print "\t" + goal_check + "\t",
 
     print "\n"
     print("Remember, this task is an important determinant of your " +
           "performance evaluation.")
-    print("Your goal is to be within +/- $7 of the actual stock price for " +
-          "this week's estimate.")
+    print("You should do your best when estimating the price of " +
+          "this week's stock")
     print "\n"
 
 
@@ -558,26 +558,26 @@ def print_summary_ex(data_list, last):
 
         print "\t$" + str(diff) + "\t",
 
-    print "\nAchieved Goal",
-    for n, x in enumerate(last_five):
-        if n == (len(last_five) - 1):
-            goal_check = ""
-        else:
-            if isinstance(x[7], int) and isinstance(last, int):
-                diff = int(x[7]) - int(x[6])
-                if math.fabs(diff) <= 7:
-                    goal_check = "YES"
-                else:
-                    goal_check = "NO"
-            else:
-                goal_check = "NO"
-        print "\t" + goal_check + "\t",
+    # print "\nAchieved Goal",
+    # for n, x in enumerate(last_five):
+    #     if n == (len(last_five) - 1):
+    #         goal_check = ""
+    #     else:
+    #         if isinstance(x[7], int) and isinstance(last, int):
+    #             diff = int(x[7]) - int(x[6])
+    #             if math.fabs(diff) <= 7:
+    #                 goal_check = "YES"
+    #             else:
+    #                 goal_check = "NO"
+    #         else:
+    #             goal_check = "NO"
+    #     print "\t" + goal_check + "\t",
 
     print "\n"
     print("Remember, this task is an important determinant of your " +
           "performance evaluation.")
-    print("Your goal is to be within +/- $7 of the actual stock price " +
-          "for this week's estimate.")
+    print("You should do your best when estimating the price of " +
+          "this week's stock")
     print "\n"
 
 
