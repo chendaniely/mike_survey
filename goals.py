@@ -356,7 +356,7 @@ def print_condition_text(condition_text):
     print("Please wait for your supervisor's feedback for the last round (15 trials).")
     time.sleep(10)  # default 10
     print(text)
-    response = raw_input('''press continue key to continue... ''')
+    response = raw_input('''Press enter key to continue... ''')
     os.system(['clear', 'cls'][os.name == 'nt'])
 
 
