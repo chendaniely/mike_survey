@@ -261,6 +261,7 @@ def example_screen(example_data_list):
         print_summary_ex(answer_list, last)
         print("Do not enter your estimate until prompted.")
         time.sleep(4.5)  # default time 4.5
+        termios.tcflush(sys.stdin, termios.TCIOFLUSH)
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
@@ -309,6 +310,7 @@ def survey(data_list, file_out, condition_number, condition_text_list):
         print_summary(answer_list, last)
         print("Do not enter your estimate until prompted")
         time.sleep(4.5)  # default time 4.5
+        termios.tcflush(sys.stdin, termios.TCIOFLUSH)
         qi = QuestionInput()
         resp, t = qi.pose_query("Based on the performance information above, what is your estimated stock price for this organization?  ", 15)
         guess = 0
