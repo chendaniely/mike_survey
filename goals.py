@@ -353,7 +353,7 @@ def print_condition_text(condition_text):
     text = '''\n\n\n\n\n '''
     text += condition_text
     text += '''\n\n\n\n\n'''
-    print("Please wait for your supervisors feedback for the last round (15 trials).")
+    print("Please wait for your supervisor's feedback for the last round (15 trials).")
     time.sleep(10)  # default 10
     print(text)
     response = raw_input('''press continue key to continue... ''')
