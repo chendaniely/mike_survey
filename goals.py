@@ -336,7 +336,7 @@ def survey(data_list, file_out, condition_number, condition_text_list):
             print_condition_text(condition_text_list[condition_text_index])
             condition_text_index += 1
             file_out.write('%s,' % str(condition_number))
-            diastolic, systolic, pulse = take_bp_and_pulse()
+            systolic, diastolic, pulse = take_bp_and_pulse()
             file_out.write('%s,' % str(systolic))
             file_out.write('%s,' % str(diastolic))
             file_out.write('%s,' % str(pulse))
@@ -357,6 +357,7 @@ def print_condition_text(condition_text):
     text += '''\n\n\n\n\n'''
     print("Please wait for your supervisor's feedback for the last round (15 trials).")
     time.sleep(10)  # default 10
+    termios.tcflush(sys.stdin, termios.TCIOFLUSH)
     print(text)
     response = raw_input('''Press enter key to continue... ''')
     os.system(['clear', 'cls'][os.name == 'nt'])
@@ -367,8 +368,8 @@ def take_bp_and_pulse():
     asks user to enter bp and pulse
     '''
     os.system(['clear', 'cls'][os.name == 'nt'])
-    text = '''\n\n\n\n\nPlease take your blood pressure and pulse
-    The test will begin after you enter your diastolic blood pressure (DIA)'''
+    text = '''\n\n\n\n\nPlease take your blood pressure and pulse.
+    The simulation will continue again after you enter the three blood pressure and pulse fields.'''
     print(text)
     while True:
         try:
@@ -379,20 +380,20 @@ def take_bp_and_pulse():
             break
     while True:
         try:
-            systolic = float(raw_input("What is your systolic blood pressure SYS? "))
+            systolic = float(raw_input("What is your systolic blood pressure (SYS)? "))
         except ValueError:
             continue
         else:
             break
     while True:
         try:
-            diastolic = float(raw_input("What is your diastolic blood pressure DIA? "))
+            diastolic = float(raw_input("What is your diastolic blood pressure (DIA)? "))
         except ValueError:
             continue
         else:
             break
 
-    return diastolic, systolic, pulse
+    return systolic, diastolic, pulse
 
 
 def take_survey():
