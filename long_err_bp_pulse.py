@@ -1,20 +1,20 @@
 
 # coding: utf-8
 
-# In[ ]:
+# In[9]:
 
 import pandas as pd
 import numpy as np
 import glob
 
 
-# In[ ]:
+# In[10]:
 
 response_files = glob.glob("*.txt")
 response_files
 
 
-# In[ ]:
+# In[11]:
 
 def data_set_column_names():
     colnames = ['time', 'orgi_trial', 'adv', 'mksh', 'revg', 'price_d', 'price_r', 'estm_orig', 'time_r', 
@@ -23,13 +23,13 @@ def data_set_column_names():
     return colnames
 
 
-# In[ ]:
+# In[12]:
 
 def read_into_dataframe(response_file):
     return pd.read_csv(response_file, names = data_set_column_names())
 
 
-# In[ ]:
+# In[13]:
 
 def generate_sections():
     my_list = []
@@ -40,12 +40,14 @@ def generate_sections():
     return pd.DataFrame(my_list, columns=['section_number'])
 
 
-# In[ ]:
+# In[15]:
 
 df_all = pd.DataFrame()
 for response_file in response_files:
     print(response_file)
     data = read_into_dataframe(response_file)
+    data = data.applymap(lambda x: np.nan if x == "None" else x)
+    print(data)
     
     col_of_interest = ['estm_orig', 'participant_response', 'condition_number', 'bp_d', 'bp_s', 'pulse']
     data_of_interest = data[col_of_interest]
