@@ -1,25 +1,20 @@
 
 # coding: utf-8
 
-# In[47]:
+# In[ ]:
 
 import pandas as pd
 import numpy as np
 import glob
 
 
-# In[48]:
-
-pwd
-
-
-# In[49]:
+# In[ ]:
 
 response_files = glob.glob("*.txt")
 response_files
 
 
-# In[50]:
+# In[ ]:
 
 def data_set_column_names():
     colnames = ['time', 'orgi_trial', 'adv', 'mksh', 'revg', 'price_d', 'price_r', 'estm_orig', 'time_r', 
@@ -29,13 +24,13 @@ def data_set_column_names():
     return colnames
 
 
-# In[51]:
+# In[ ]:
 
 def read_into_dataframe(response_file):
     return pd.read_csv(response_file, names = data_set_column_names())
 
 
-# In[52]:
+# In[ ]:
 
 def generate_sections():
     my_list = []
@@ -46,7 +41,7 @@ def generate_sections():
     return pd.DataFrame(my_list, columns=['section_number'])
 
 
-# In[60]:
+# In[ ]:
 
 def get_dataframe(response_file):
     data = read_into_dataframe(response_file)
@@ -54,7 +49,7 @@ def get_dataframe(response_file):
     return data
 
 
-# In[54]:
+# In[ ]:
 
 def get_cols_of_interest(df):
     col_of_interest = ['estm_orig', 'participant_response', 'condition_number', 'bp_d', 'bp_s', 'pulse']
@@ -63,7 +58,7 @@ def get_cols_of_interest(df):
     return data_of_interest
 
 
-# In[55]:
+# In[ ]:
 
 def clean_dataframe(df):
     df['abs_error'] = abs(df['estm_orig'].astype(float) - df['participant_response'].astype(float))
@@ -86,7 +81,7 @@ def clean_dataframe(df):
     return data_merged
 
 
-# In[56]:
+# In[ ]:
 
 def get_totals(response_file):
     df = get_dataframe(response_file)
@@ -97,12 +92,12 @@ def get_totals(response_file):
     return sum_abs_error, sum_obs
 
 
-# In[57]:
+# In[ ]:
 
 np.mean([1, 3, 5, np.nan])
 
 
-# In[58]:
+# In[ ]:
 
 df_all = pd.DataFrame()
 for response_file in response_files:
@@ -116,13 +111,13 @@ for response_file in response_files:
 df_all
 
 
-# In[76]:
+# In[ ]:
 
 final = df_all.pivot('respondent', 'section_number')
 final
 
 
-# In[78]:
+# In[ ]:
 
 final.to_csv("bp_pulse.csv")
 
