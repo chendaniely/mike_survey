@@ -1,20 +1,20 @@
 
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 import pandas as pd
 import numpy as np
 import glob
 
 
-# In[ ]:
+# In[2]:
 
 response_files = glob.glob("*.txt")
 response_files
 
 
-# In[ ]:
+# In[3]:
 
 def data_set_column_names():
     colnames = ['time', 'orgi_trial', 'adv', 'mksh', 'revg', 'price_d', 'price_r', 'estm_orig', 'time_r', 
@@ -24,13 +24,13 @@ def data_set_column_names():
     return colnames
 
 
-# In[ ]:
+# In[4]:
 
 def read_into_dataframe(response_file):
     return pd.read_csv(response_file, names = data_set_column_names())
 
 
-# In[ ]:
+# In[5]:
 
 def generate_sections():
     my_list = []
@@ -41,7 +41,7 @@ def generate_sections():
     return pd.DataFrame(my_list, columns=['section_number'])
 
 
-# In[ ]:
+# In[6]:
 
 def get_dataframe(response_file):
     data = read_into_dataframe(response_file)
@@ -49,19 +49,19 @@ def get_dataframe(response_file):
     return data
 
 
-# In[ ]:
+# In[7]:
 
 def get_cols_of_interest(df):
-    col_of_interest = ['estm_orig', 'participant_response', 'condition_number', 'bp_d', 'bp_s', 'pulse']
+    col_of_interest = ['price_r', 'participant_response', 'condition_number', 'bp_d', 'bp_s', 'pulse']
     assert isinstance(col_of_interest, list)
     data_of_interest = df[col_of_interest]
     return data_of_interest
 
 
-# In[ ]:
+# In[8]:
 
 def clean_dataframe(df):
-    df['abs_error'] = abs(df['estm_orig'].astype(float) - df['participant_response'].astype(float))
+    df['abs_error'] = abs(df['price_r'].astype(float) - df['participant_response'].astype(float))
     
     data_with_group = pd.concat([df, generate_sections()], axis=1)
 
@@ -81,23 +81,18 @@ def clean_dataframe(df):
     return data_merged
 
 
-# In[ ]:
+# In[9]:
 
 def get_totals(response_file):
     df = get_dataframe(response_file)
     df = get_cols_of_interest(df)
-    df['abs_error'] = abs(df['estm_orig'].astype(float) - df['participant_response'].astype(float))
+    df['abs_error'] = abs(df['price_r'].astype(float) - df['participant_response'].astype(float))
     sum_abs_error = df['abs_error'].astype(float).sum(axis=2)
     sum_obs = df['participant_response'].count()
     return sum_abs_error, sum_obs
 
 
-# In[ ]:
-
-np.mean([1, 3, 5, np.nan])
-
-
-# In[ ]:
+# In[10]:
 
 df_all = pd.DataFrame()
 for response_file in response_files:
@@ -111,18 +106,13 @@ for response_file in response_files:
 df_all
 
 
-# In[ ]:
+# In[11]:
 
 final = df_all.pivot('respondent', 'section_number')
 final
 
 
-# In[ ]:
+# In[12]:
 
 final.to_csv("bp_pulse.csv")
-
-
-# In[ ]:
-
-
 
