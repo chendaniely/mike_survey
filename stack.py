@@ -1,20 +1,20 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 import pandas as pd
 import numpy as np
 import glob
 
 
-# In[2]:
+# In[ ]:
 
 response_files = glob.glob("*.txt")
 response_files
 
 
-# In[3]:
+# In[ ]:
 
 def data_set_column_names():
     colnames = ['time', 'orgi_trial', 'adv', 'mksh', 'revg', 'price_d', 'price_r', 'estm_orig', 'time_r', 
@@ -24,13 +24,13 @@ def data_set_column_names():
     return colnames
 
 
-# In[4]:
+# In[ ]:
 
 def read_into_dataframe(response_file):
     return pd.read_csv(response_file, names = data_set_column_names())
 
 
-# In[5]:
+# In[ ]:
 
 def generate_sections():
     my_list = []
@@ -41,7 +41,7 @@ def generate_sections():
     return pd.DataFrame(my_list, columns=['section_number'])
 
 
-# In[6]:
+# In[ ]:
 
 def get_dataframe(response_file):
     data = read_into_dataframe(response_file)
@@ -49,7 +49,7 @@ def get_dataframe(response_file):
     return data
 
 
-# In[7]:
+# In[ ]:
 
 def get_cols_of_interest(df):
     col_of_interest = ['price_r', 'participant_response', 'condition_number', 'bp_d', 'bp_s', 'pulse']
@@ -58,7 +58,7 @@ def get_cols_of_interest(df):
     return data_of_interest
 
 
-# In[13]:
+# In[ ]:
 
 def clean_dataframe(df):
     df['abs_error'] = abs(df['price_r'].astype(float) - df['participant_response'].astype(float))
@@ -82,7 +82,7 @@ def clean_dataframe(df):
     return data_drop_na
 
 
-# In[14]:
+# In[ ]:
 
 def get_totals(response_file):
     df = get_dataframe(response_file)
@@ -93,7 +93,7 @@ def get_totals(response_file):
     return sum_abs_error, sum_obs
 
 
-# In[16]:
+# In[ ]:
 
 df_all = pd.DataFrame()
 for response_file in response_files:
@@ -107,7 +107,7 @@ for response_file in response_files:
 df_all
 
 
-# In[12]:
+# In[ ]:
 
-final.to_csv("bp_pulse.csv")
+df_all.to_csv("stacked.csv")
 
