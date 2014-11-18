@@ -1,21 +1,23 @@
 
 # coding: utf-8
 
-# In[65]:
+# In[ ]:
 
 import pandas as pd
 import numpy as np
 import glob
 import re
+import unicodedata
+import string
 
 
-# In[66]:
+# In[ ]:
 
 response_files = glob.glob("*.txt")
 response_files
 
 
-# In[67]:
+# In[ ]:
 
 def data_set_column_names():
     colnames = ['time', 'orgi_trial', 'adv', 'mksh', 'revg', 'price_d', 'price_r', 'estm_orig', 'time_r', 
@@ -25,13 +27,13 @@ def data_set_column_names():
     return colnames
 
 
-# In[68]:
+# In[ ]:
 
 def read_into_dataframe(response_file):
     return pd.read_csv(response_file, names = data_set_column_names())
 
 
-# In[69]:
+# In[ ]:
 
 def generate_sections():
     my_list = []
@@ -42,7 +44,7 @@ def generate_sections():
     return pd.DataFrame(my_list, columns=['section_number'])
 
 
-# In[70]:
+# In[ ]:
 
 def get_dataframe(response_file):
     data = read_into_dataframe(response_file)
@@ -50,7 +52,7 @@ def get_dataframe(response_file):
     return data
 
 
-# In[71]:
+# In[ ]:
 
 def get_cols_of_interest(df):
     col_of_interest = ['price_r', 'participant_response', 'condition_number', 'bp_d', 'bp_s', 'pulse']
@@ -59,27 +61,41 @@ def get_cols_of_interest(df):
     return data_of_interest
 
 
-# In[72]:
+# In[ ]:
 
-def strip_non_numeric_characters(vector):
+def strip_non_numeric_characters(user_input):
     non_decimal = re.compile(r'[^\d.]+')
-    print(vector)
-    cleaned_list = list(non_decimal.sub('', x) for x in vector)
-    cleaned_vector = np.array(cleaned_list)
-    print(cleaned_vector)
-    return cleaned_vector
+    return non_decimal.sub('', user_input)
 
 
-# In[102]:
+# In[ ]:
+
+def remove_control_characters(df):
+    df['participant_response'] = df['participant_response'].str.replace('\[D', '')
+    df['participant_response'] = df['participant_response'].str.replace('\[A', '')
+    return df
+
+
+# In[ ]:
 
 def clean_dataframe(df):
-    print(df.head())
-    # df['price_r'] = df['price_r'].str.replace('\\', '')                                              
-    df['participant_response'] = df['participant_response'].map(lambda x: str(x).replace('\\', ''))
-    # df['participant_response'] = df['participant_response'].apply(strip_non_numeric_characters)
+    # print(df.head(n = 20))
+    df = remove_control_characters(df)
     
-    df['abs_error'] = abs(df['price_r'].astype(float) - df['participant_response'].astype(float))
+    # remove non numeric numbers
+    non_decimal = re.compile(r'[^\d.]+')
+    df['participant_response'] = df['participant_response'].map(lambda x: non_decimal.sub('', str(x)))
     
+    # replace empty strings with nan
+    df['participant_response'] = df['participant_response'].replace('', np.nan)
+
+    # df['participant_response'] = df['participant_response'].map(lambda x: float(x.strip()))
+
+    # df.to_csv("temp_df.csv")
+    # df['abs_error'] = abs(df['price_r'].astype(float) - df['participant_response'].astype(float))
+    df['abs_error'] = abs(df['price_r'].convert_objects(convert_dates=False, convert_numeric=True) - 
+                          df['participant_response'].convert_objects(convert_dates=False, convert_numeric=True))
+
     data_with_group = pd.concat([df, generate_sections()], axis=1)
 
     # get average error per section
@@ -98,21 +114,30 @@ def clean_dataframe(df):
     return data_merged
 
 
-# In[103]:
+# In[ ]:
 
 def get_totals(response_file):
     df = get_dataframe(response_file)
     df = get_cols_of_interest(df)
-    # following line of code is copied from the clean_dataframe function
-    df['participant_response'] = df['participant_response'].map(lambda x: str(x).replace('\\', ''))
+    df = remove_control_characters(df)
+
+    # remove non numeric numbers
+    non_decimal = re.compile(r'[^\d.]+')
+    df['participant_response'] = df['participant_response'].map(lambda x: non_decimal.sub('', str(x)))
+    
+    # replace empty strings with nan
+    df['participant_response'] = df['participant_response'].replace('', np.nan)
+    
+    print(df)
     
     df['abs_error'] = abs(df['price_r'].astype(float) - df['participant_response'].astype(float))
+    print(df)
     sum_abs_error = df['abs_error'].astype(float).sum(axis=2)
     sum_obs = df['participant_response'].count()
     return sum_abs_error, sum_obs
 
 
-# In[104]:
+# In[ ]:
 
 df_all = pd.DataFrame()
 for response_file in response_files:
@@ -121,6 +146,7 @@ for response_file in response_files:
     df = get_cols_of_interest(df)
     df = clean_dataframe(df)
     df['respondent'] = response_file
+    
     total_abs_error, total_abs_obs = get_totals(response_file)
     df['total_abs_error'], df['total_abs_obs'] = total_abs_error, total_abs_obs
     df_all = df_all.append(df)
@@ -128,13 +154,13 @@ for response_file in response_files:
 df_all
 
 
-# In[105]:
+# In[ ]:
 
 final = df_all.pivot('respondent', 'section_number')
 final
 
 
-# In[106]:
+# In[ ]:
 
 final.to_csv("bp_pulse.csv")
 
