@@ -10,7 +10,7 @@ colnames <- c('time', 'orgi_trial', 'adv', 'mksh', 'revg', 'price_d',
 
 all <- data.frame()
 
-# i <- 1
+i <- 1
 for(i in 1:length(participant_files)){
     print(participant_files[i])
     df <- read.table(participant_files[i], header = FALSE, sep = ",",
@@ -66,8 +66,21 @@ for(i in 1:length(participant_files)){
 
     all <- rbind(all, df_section_summary)
 }
+all
 
-write.csv(all, 'all.csv', row.names = FALSE)
+
+
+###
+# stupid <- data.frame()
+# stupid$
+# for(k in 1:nrow(all)){
+#
+# }
+
+###
+
+
+# write.csv(all, 'all.csv', row.names = FALSE)
 
 
 # transpose <- as.matrix(df_section_summary) %>% t() %>% as.data.frame()
