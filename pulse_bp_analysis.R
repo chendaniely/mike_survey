@@ -10,7 +10,7 @@ colnames <- c('time', 'orgi_trial', 'adv', 'mksh', 'revg', 'price_d',
 
 all <- data.frame()
 
-i <- 1
+# i <- 2
 for(i in 1:length(participant_files)){
     print(participant_files[i])
     df <- read.table(participant_files[i], header = FALSE, sep = ",",
@@ -28,7 +28,7 @@ for(i in 1:length(participant_files)){
     df$section <- sections
 
     # clean response data
-    df[df$participant_response == "", ] <- NA
+    df[df$participant_response == "" | is.na(df$participant_response), ] <- NA
     df$participant_response <- as.numeric(df$participant_response)
     df$abs_diff <- abs(df$price_r - df$participant_response)
 
@@ -66,9 +66,8 @@ for(i in 1:length(participant_files)){
 
     all <- rbind(all, df_section_summary)
 }
-all
 
-
+print(head(all))
 
 ###
 # stupid <- data.frame()
@@ -76,12 +75,9 @@ all
 # for(k in 1:nrow(all)){
 #
 # }
-
 ###
 
-
 write.csv(all, 'all.csv', row.names = FALSE)
-
 
 # transpose <- as.matrix(df_section_summary) %>% t() %>% as.data.frame()
 
