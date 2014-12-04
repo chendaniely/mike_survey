@@ -80,7 +80,7 @@ all
 ###
 
 
-# write.csv(all, 'all.csv', row.names = FALSE)
+write.csv(all, 'all.csv', row.names = FALSE)
 
 
 # transpose <- as.matrix(df_section_summary) %>% t() %>% as.data.frame()
