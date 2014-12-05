@@ -8,12 +8,12 @@ colnames <- c('time', 'orgi_trial', 'adv', 'mksh', 'revg', 'price_d',
             'participant_response', 'condition_number',
             'bp_s', 'bp_d', 'pulse')
 
-all <- data.frame()
+participant_file <- "A43538908_A43538908.txt"
 
-# i <- 2
-for(i in 1:length(participant_files)){
-    print(participant_files[i])
-    df <- read.table(participant_files[i], header = FALSE, sep = ",",
+file_to_long <- function(participant_file){
+    values <- c()
+    print(participant_file)
+    df <- read.table(participant_file, header = FALSE, sep = ",",
                      col.names = colnames,
                      fill = TRUE, stringsAsFactors = FALSE)
     length(df$time)
@@ -28,7 +28,7 @@ for(i in 1:length(participant_files)){
     df$section <- sections
 
     # clean response data
-    df[df$participant_response == "" | is.na(df$participant_response), ] <- NA
+    df$participant_response[df$participant_response == "" | is.na(df$participant_response)] <- NA
     df$participant_response <- as.numeric(df$participant_response)
     df$abs_diff <- abs(df$price_r - df$participant_response)
 
@@ -42,7 +42,7 @@ for(i in 1:length(participant_files)){
                                  y = df_section_summary,
                                  by = 'section', all.y = TRUE)
 
-    df_section_summary$respondent <- participant_files[i]
+    df_section_summary$respondent <- participant_file
     df_section_summary$section <- as.character(df_section_summary$section)
 
     avg_diff_vector <- df_section_summary[1:12, "avg_difference"]
@@ -58,33 +58,69 @@ for(i in 1:length(participant_files)){
     avg_pulse <- mean(df_section_summary$pulse, na.rm = TRUE)
     condition_number <- unique(na.omit(df_section_summary$condition_number))
     values <- c('Total_avg_diff', condition_number, avg_bp_s, avg_bp_d, avg_pulse,
-                test_average_difference, total_num_responses, participant_files[i])
+                test_average_difference, total_num_responses, participant_file)
 
     df_section_summary <- rbind(df_section_summary, values)
 
-    df_section_summary <- na.omit(df_section_summary)
-
-    all <- rbind(all, df_section_summary)
+    long <- df_section_summary[!is.na(df_section_summary$section), ]
+    print(long)
+    return(long)
 }
 
-print(head(all))
+temp_long <- file_to_long(participant_file)
 
-###
-# stupid <- data.frame()
-# stupid$
-# for(k in 1:nrow(all)){
-#
-# }
-###
+dataframe <- temp_long
 
-write.csv(all, 'all.csv', row.names = FALSE)
+long_to_wide <- function(dataframe){
+    respondent <- unique(na.omit(dataframe$respondent))
+    respondent
 
-# transpose <- as.matrix(df_section_summary) %>% t() %>% as.data.frame()
+    condition_number <- unique(na.omit(dataframe$condition_number))
+    condition_number
 
-# dcast(df_section_summary, bp_s + b p_d + pulse + avg_difference + num_responses ~ respondent)
+    values_wide <- c(respondent, condition_number)
+    values_wide
 
-# string <- "120\033[A\033[A"
-# pattern <- '\\\\[:digit:]{1, }\\[[:alpha:]*'
-# pattern <- '\\\\'
-# str_replace_all(string = string, pattern = pattern, replacement = "")
+    values_names <- c("respondent", "condition_number")
+    values_names
 
+    k <- 1
+    l <- 3
+
+    for(k in 1:length(dataframe$section)){
+        for(l in 3:length(names(dataframe))- 1){
+            new_column_name <- paste(names(dataframe)[l], dataframe$section[k], sep = "_")
+            new_column_name
+            values_names <- c(values_names, new_column_name)
+            values_names
+
+            new_value <- dataframe[k, l]
+            new_value
+
+            values_wide <- c(values_wide, new_value)
+            values_wide
+        }
+    }
+    values_wide <- t(as.matrix(values_wide))
+    values_wide <- as.data.frame(values_wide)
+    names(values_wide) <- values_names
+    return(values_wide)
+}
+
+long_to_wide(temp_long)
+
+##############################################################################
+
+all_long <- data.frame()
+all_wide <- data.frame()
+
+for(participant_file in participant_files){
+    long <- file_to_long(participant_file)
+    wide <- long_to_wide(long)
+
+    all_long <- rbind(all_long, long)
+    all_wide <- rbind(all_wide, wide)
+}
+
+write.csv(all_long, 'all_long.csv', row.names = FALSE)
+write.csv(all_wide, 'all_wide.csv', row.names = FALSE)
