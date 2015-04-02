@@ -1,5 +1,8 @@
 mike_survey
 ===========
+
+[![DOI](https://zenodo.org/badge/11594/chendaniely/mike_survey.svg)](#DOI)
+
 To install:
 
 `git clone git://github.com/chendaniely/mike_survey.git`
